@@ -30,9 +30,9 @@ def create_pet(token: str, pet_data: list):
                                       animal_type=pet['animal_type'],
                                       age=pet['age']).json()
         pets.append(response)
-    yield pets
-    pet_list = pf.get_list_of_pets(token).json()['pets']
+    return pets
+"""    pet_list = pf.get_list_of_pets(token).json()['pets']
     pet_ids = [pet['id'] for pet in pets]
     for pet in pet_list:
         if pet['id'] in pet_ids:
-            pf.delete_pet(token, pet['id'])
+            pf.delete_pet(token, pet['id'])"""
