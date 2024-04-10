@@ -1,6 +1,12 @@
 import pytest
 import settings
 from api.api import PetFriends
+from selenium import webdriver
+from faker import Faker
+
+from ui_framework.pages.signup_page import SignUpPage
+
+fake = Faker()
 
 
 @pytest.fixture(name='token', scope='function')
@@ -31,8 +37,25 @@ def create_pet(token: str, pet_data: list):
                                       age=pet['age']).json()
         pets.append(response)
     return pets
-"""    pet_list = pf.get_list_of_pets(token).json()['pets']
-    pet_ids = [pet['id'] for pet in pets]
-    for pet in pet_list:
-        if pet['id'] in pet_ids:
-            pf.delete_pet(token, pet['id'])"""
+
+
+@pytest.fixture(scope='session')
+def browser():
+    driver = webdriver.Chrome()
+    # driver.maximize_window()
+    yield driver
+    driver.quit()
+
+
+@pytest.fixture(name='main_page', scope='function')
+def open_main_page(browser):
+    browser.get(settings.base_url)
+    return SignUpPage(browser)
+
+
+@pytest.fixture(name='user_data', scope='function')
+def generate_user_data():
+    user_data = {'name': fake.first_name(),
+                 'email': fake.email(),
+                 'password': fake.password()}
+    return user_data
