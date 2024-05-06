@@ -23,16 +23,3 @@ def log_api_call(func):
         return response
 
     return wrapper
-
-
-
-def time_counter(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        result = func(*args, **kwargs)
-        end_time = time.time()
-        logger.info(f"Время выполнения теста: {end_time - start_time} секунд")
-        return result
-
-    return wrapper

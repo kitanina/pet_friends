@@ -42,7 +42,7 @@ class NewUserPage(BasePage):
         self.set_email(email)
         self.set_password(password)
         self.registration_button.click()
-        from ui_framework.pages.user_page import UserPage
+        from user_page import UserPage
         return UserPage(self.driver)
 
     def get_alert_message(self):

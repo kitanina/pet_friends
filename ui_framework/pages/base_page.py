@@ -1,4 +1,5 @@
 import time
+from selenium.common import NoSuchElementException
 
 from selenium.webdriver.chrome.webdriver import WebDriver
 
@@ -44,3 +45,13 @@ class BasePage:
 
     def is_visible(self, locator):
         return self.find_element(locator).is_displayed()
+
+    def is_element_present(self, locator):
+        try:
+            self.find_element(locator)
+            return True
+        except NoSuchElementException:
+            return False
+
+    def read_data_grid(self, locator):
+        return self.find_element(locator).text
