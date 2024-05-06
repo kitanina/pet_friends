@@ -1,4 +1,6 @@
 import pytest
+from selenium.common import NoSuchElementException
+
 import settings
 from api.api import PetFriends
 from selenium import webdriver
@@ -59,3 +61,18 @@ def generate_user_data():
                  'email': fake.email(),
                  'password': fake.password()}
     return user_data
+
+
+@pytest.fixture(name='open_user_page', scope='function')
+def open_user_page(main_page, user_data):
+    new_user_page = main_page.get_new_user_page()
+    user_page = new_user_page.get_user_page(user_data['name'], user_data['email'], user_data['password'])
+    try:
+        new_user_page.alert_message
+        return new_user_page.get_alert_message()
+    except NoSuchElementException:
+        from ui_framework.pages.user_page import UserPage
+        return UserPage(user_page.driver), user_data
+
+
+

@@ -9,5 +9,5 @@ class SignUpPage(BasePage):
 
     def get_new_user_page(self):
         self.registration_button.click()
-        from ui_framework.pages.new_user_page import NewUserPage
+        from new_user_page import NewUserPage
         return NewUserPage(self.driver)

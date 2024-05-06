@@ -92,3 +92,9 @@ def test_pet_friends(token, create_delete_pet):
     delete_pets(token=token, created_pets=created_pets)
     new_pets_from_system = pf.get_list_of_pets(auth_key=token).json()['pets']
     assert not check_updated_pets(created_pets=created_pets, updated_pets=new_pets_from_system)
+
+
+def test_delete_all_my_pets(token):
+    pets = pf.get_list_of_pets(auth_key=token).json()['pets']
+    for pet in pets:
+            pf.delete_pet(auth_key=token, pet_id=pet['id'])

@@ -3,7 +3,20 @@ def test_reg_user(main_page, user_data):
     email = user_data['email']
     password = user_data['password']
     new_user_page = main_page.get_new_user_page()
-    main_page = new_user_page.get_main_page(name, email, password)
-    assert main_page.card_deck_grid.is_displayed()
+    user_page = new_user_page.get_user_page(name, email, password)
+    assert user_page.card_deck_grid.is_displayed()
 
 
+def test_exit_from_user_page(open_user_page):
+    user_page, user_date = open_user_page
+    assert user_page.card_deck_grid.is_displayed()
+
+    sign_up_page = user_page.get_sign_up_page()
+    assert sign_up_page.registration_button.is_displayed()
+
+
+def test_check_text_from_grid(open_user_page):
+    user_page, user_data = open_user_page
+    assert user_page.card_deck_grid.is_displayed()
+
+    text= user_page.read_data_grid(user_page.card_deck_grid)
